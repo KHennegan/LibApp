@@ -1,0 +1,26 @@
+build failed app:debug fixes:
+
+cd android
+./gradlew clean
+cd ..
+
+npx react-native start --port 8081 --reset-cache //8084?
+
+reset project in android studio
+
+wipe data from avd in android studio
+
+delete andorid/app/build folder
+
+in root folder: npm cache clean --force
+
+tried deleting the file that is causing so much issue
+tried creating a new avd
+
+
+1. 'abd shell input keyevent 82'
+2. Settings > 'Debug server host & port for device'
+3. enter 'localhost:8081'
+4 terminal 'abd reverse tcp:8081 tcp:8081'
+
+got back to developer menu and select reload
