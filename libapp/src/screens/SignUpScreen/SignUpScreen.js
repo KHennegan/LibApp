@@ -6,23 +6,23 @@ import {View,
     useWindowDimensions,
     ScrollView
 } from 'react-native'
-import Logo from '../../assets/images/temp_logo2.jpeg';
-import CustomInput from '../components/CustomInput';
-import CustomButton from '../components/CustomButton';
+import Logo from '../../../assets/images/temp_logo2.jpeg';
+import CustomInput from '../../components/CustomInput';
+import CustomButton from '../../components/CustomButton';
 
 
 const SignUpScreen = () => {
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
-
-    const {height} = useWindowDimensions(); //gets the dimensions of the phone screen to use
+    const [passwordRepeat, setPasswordRepeat] = useState('');
     
     const onSignInPressed = () => {
         console.warn("Sign in");
     }
 
-    const onForgotPasswordPressed = () => {
-        console.warn("Forgot Password")
+    const onRegisterPressed = () => {
+        console.warn("Register")
     }
     const onSignInApple = () => {
         console.warn("Sign in Apple")
@@ -47,20 +47,34 @@ const SignUpScreen = () => {
               setValue={setUsername}
             />
             <CustomInput 
+              placeholder="Email" 
+              value={email} 
+              setValue={setEmail}
+            />
+            <CustomInput 
               placeholder="Password" 
               value={password}
               setValue={setPassword}
               secureTextEntry={true}
             />
-            <CustomButton
-              text="Sign in"
-              onPress={onSignInPressed}
+            <CustomInput 
+              placeholder="Confirm Password" 
+              value={passwordRepeat} 
+              setValue={setPasswordRepeat}
             />
+
+
             <CustomButton
-              text="Forgot Password?"
-              onPress={onForgotPasswordPressed}
-              type="TERTIARY"
+              text="Register"
+              onPress={onRegisterPressed}
             />
+          
+          <Text style={styles.text}>
+            By registering, you confirm that you accept our 
+              <Text style={styles.link}> Terms of Use </Text>
+               and 
+              <Text style={styles.link}> Privacy Policy</Text>
+          </Text>
 
             <CustomButton
               text="Sign in with Google"
@@ -80,7 +94,11 @@ const SignUpScreen = () => {
               bgColor="E7EAF4"
               fgColor="#4765A9"
             />
-            
+            <CustomButton
+              text="Don't have an account? Create one"
+              onPress={onSignUpPressed}
+              type="TERTIARY"
+            />
         </View>
         </ScrollView>
     );
