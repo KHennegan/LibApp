@@ -3,12 +3,12 @@ import {View,
     Text, 
     Image, 
     StyleSheet,
-    useWindowDimensions,
     ScrollView
 } from 'react-native'
-import Logo from '../../../assets/images/temp_logo2.jpeg';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
+import SocialSignInButtons from '../../components/SocialSignInButtons/SocialSignInButtons';
+import { useNavigation } from '@react-navigation/native';
 
 
 const SignUpScreen = () => {
@@ -16,26 +16,24 @@ const SignUpScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
     const [passwordRepeat, setPasswordRepeat] = useState('');
-    
-    const onSignInPressed = () => {
-        console.warn("Sign in");
-    }
+
+    const navigation = useNavigation();
 
     const onRegisterPressed = () => {
-        console.warn("Register")
+        navigation.navigate("ConfirmEmail");
     }
-    const onSignInApple = () => {
-        console.warn("Sign in Apple")
+    
+    const onSignInPressed = () => {
+      navigation.navigate("SignIn");
     }
-    const onSignInFacebook = () => {
-        console.warn("Sign in Facebook")
+    const onTermsOfUsePressed = () => {
+      console.warm("Terms of Use");
     }
-    const onSignInGoogle = () => {
-        console.warn("Sign in Google")
+    const onPrivacyPressed = () => {
+      console.warn("Privacy Policy");
     }
-    const onSignUpPressed = () => {
-        console.warn("Sign Up")
-    }
+
+
     return (
         <ScrollView showsVerticlaScrollIndicator={false}>
         <View style={styles.root}>
@@ -71,34 +69,18 @@ const SignUpScreen = () => {
           
           <Text style={styles.text}>
             By registering, you confirm that you accept our 
-              <Text style={styles.link}> Terms of Use </Text>
+              <Text style={styles.link} onPress={onTermsOfUsePressed}> Terms of Use </Text>
                and 
-              <Text style={styles.link}> Privacy Policy</Text>
+              <Text style={styles.link} onPress={onPrivacyPressed}> Privacy Policy</Text>
           </Text>
 
-            <CustomButton
-              text="Sign in with Google"
-              onPress={onSignInGoogle}
-              bgColor="#FAE9EA"
-              fgColor="#DD4D44"
-            />
-            <CustomButton
-              text="Sign in with Apple"
-              onPress={onSignInApple}
-              bgColor="#e3e3e3"
-              fgColor="#363636"
-            />
-            <CustomButton
-              text="Sign in with Facebook"
-              onPress={onSignInFacebook}
-              bgColor="E7EAF4"
-              fgColor="#4765A9"
-            />
-            <CustomButton
-              text="Don't have an account? Create one"
-              onPress={onSignUpPressed}
-              type="TERTIARY"
-            />
+          <SocialSignInButtons/>
+
+          <CustomButton
+            text="Have an account? Sign in"
+            onPress={onSignInPressed}
+            type="TERTIARY"
+          />
         </View>
         </ScrollView>
     );
@@ -109,11 +91,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
     },
-    logo: {
-        width: '70%',
-        maxWidth: 500,
-        maxHeight: 500,
+    text: {
+        color: 'gray',
+        marginVertical: 10,
         
+    },
+    link: {
+      color: '#FDB075'
+
     },
     title: {
         fontSize: 25,
