@@ -1,6 +1,14 @@
 import React from 'react'
 import {View, Text, StyleSheet, Pressable} from 'react-native'
 
+const COLORS = {
+    GREEN: '#CCE8CC',
+    BLUE: '#7899D4',
+    PINK: '#FFB2CD',
+    PURPLE: '#C5ADFF',
+    GREY: '#5B5B5B'
+}
+
 const CustomButton = ({onPress, text, type = "PRIMARY", bgColor, fgColor}) => {
     return (
         <Pressable onPress={onPress} 
@@ -34,11 +42,11 @@ const styles = StyleSheet.create({
     },
 
     container_PRIMARY: {
-        backgroundColor: '#3B71F3',
+        backgroundColor: COLORS.PINK,//'#3B71F3',
 
     },
     container_SECONDARY: {
-        borderColor: '#3B71F3',
+        borderColor: COLORS.PINK,//'#3B71F3',
         borderWidth: 2,
     },
     container_TERTIARY: {
@@ -50,11 +58,11 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     text_SECONDARY: {
-        color: '#3B71F3',
+        color: COLORS.GREY, //'#3B71F3',
     },
 
     text_TERTIARY: {
-        color: 'grey',
+        color: COLORS.GREY, //'grey',
     }
 
 });

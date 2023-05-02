@@ -14,6 +14,14 @@ import SocialSignInButtons from '../../components/SocialSignInButtons'
 import { useNavigation} from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 
+const COLORS = {
+    GREEN: '#CCE8CC',
+    BLUE: '#7899D4',
+    PINK: '#FFB2CD',
+    PURPLE: '#C5ADFF',
+    GREY: '#5B5B5B'
+}
+
 const SignInScreen = () => {
     const {height} = useWindowDimensions(); //gets the dimensions of the phone screen to use
     const navigation = useNavigation();
@@ -51,14 +59,35 @@ const SignInScreen = () => {
               name="username" 
               placeholder="Username" 
               control={control}
-              rules={{required:true}}
+              rules={{
+                required: 'Username is required',
+                minLength: {
+                    value: 3,
+                    message: "Usernames should be at least three characters long"
+                },
+                maxLength: {
+                    value: 12,
+                    message: "Usernames cannot exceede 12 characters in length"
+                },
+                pattern: {
+                    value: /[a-zA-Z]\w+/,
+                    message: 'Usernames must start with a letter and contain only digits and numbers'
+                }
+            
+              }} //this string becomes the error message
             />
             <CustomInput 
               name="password"
               placeholder="Password" 
               control={control}
               secureTextEntry={true}
-              rules={{required: 'Username is required'}}
+              rules={{
+                required: 'Password is required',
+                minLength: {
+                    value: 3, 
+                    message: 'Password should be minimum 3 characters'
+                }, //this object overwrites default error message when the validation paramter is not met
+            }}
 
             />
             
@@ -90,6 +119,7 @@ const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
         padding: 20,
+        backgroundColor: COLORS.GREEN,
     },
     logo: {
         width: '70%',
