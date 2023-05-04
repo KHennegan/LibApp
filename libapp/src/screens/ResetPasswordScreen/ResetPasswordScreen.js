@@ -10,11 +10,10 @@ import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 
-
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/;
+const CONFRIM_CODE_REGEX = /[a-zA-Z0-9]{6}/;
 
 const ResetPasswordScreen = () => {
-    const [code, setCode] = useState('');
-    const [newPassword, setNewPassword] = useState('');
 
     const navigation = useNavigation();
 
@@ -23,9 +22,9 @@ const ResetPasswordScreen = () => {
       handleSubmit, 
       formState: {errors}
   } = useForm();
-
-
-    const onSubmitPressed = () => {
+  
+    const onSubmitPressed = (data) => {
+      console.warn(data);
       navigation.navigate("HomeScreen");
     }
     const onSignInPressed = () => {
@@ -58,7 +57,7 @@ const ResetPasswordScreen = () => {
                   message: "Confirmation codes should be 6 characters long"
                 },
                 pattern: {
-                  value: /[a-zA-Z0-9]{6}/,
+                  value: CONFRIM_CODE_REGEX,
                   message: "Confirmation codes should only contain digits and letters"
                 }
               }}
@@ -71,11 +70,11 @@ const ResetPasswordScreen = () => {
               rules={{
                 required: "A new password is required",
                 minLength: {
-                  value: 3,
-                  message: "Passwords should be at least 3 characters long"
+                  value: 8,
+                  message: "Passwords should be at least 8 characters long"
                 },
                 pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/,
+                  value: PASSWORD_REGEX,
                   message: "Your password must contain at least one letter, one number, and one special character (@$!%*#?&)"
                 }
 
@@ -83,7 +82,7 @@ const ResetPasswordScreen = () => {
             />
             <CustomButton
               text="Submit"
-              onPress={handleSumbit(onSubmitPressed)}
+              onPress={handleSubmit(onSubmitPressed)}
             />
             <CustomButton
               text="Resend Code"

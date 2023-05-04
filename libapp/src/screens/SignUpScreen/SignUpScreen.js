@@ -19,18 +19,19 @@ const COLORS = {
   GREY: '#5B5B5B'
 }
 
-const SignUpScreen = () => {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('');
-    const [passwordRepeat, setPasswordRepeat] = useState('');
+const EMAIL_REGEX = /\w+[@]\w+(\.[A-Za-z]{2,3})$/
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/
 
+const SignUpScreen = () => {
     const navigation = useNavigation();
     const {
       control, 
       handleSubmit, 
-      formState: {errors}
+      formState: {errors},
+      watch
   } = useForm();
+
+    const pwd = watch('password');
 
     const onRegisterPressed = () => {
         navigation.navigate("ConfirmEmail");
@@ -63,8 +64,8 @@ const SignUpScreen = () => {
                     message: 'Username should be minimum 3 characters'
                 },
                 maxLength: {
-                  value: 12,
-                  message: 'Username can only be 12 characters long'
+                  value: 24,
+                  message: 'Username can only be 24 characters long'
                 },
                 pattern: {
                   value: /[a-zA-Z]\w+/,
@@ -83,7 +84,7 @@ const SignUpScreen = () => {
                     message: 'Please enter a valid email address'
                 },
                 pattern: {
-                    value: /\w+[@]\w+(\.[A-Za-z]{2,3})$/,
+                    value: EMAIL_REGEX,
                     message: 'Please enter a valid email address'
                 }
               }}
@@ -96,11 +97,11 @@ const SignUpScreen = () => {
               rules={{
                 required: 'Password confirmation is required',
                 minLength: {
-                    value: 3, 
-                    message: 'Password should be minimum 3 characters',
+                    value: 8, 
+                    message: 'Password should be minimum 8 characters',
                 },
                 pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/,
+                  value: PASSWORD_REGEX,
                   message: "Your password must contain at least one letter, one number, and one special character (@$!%*#?&)"
                 }
               }}
@@ -111,17 +112,11 @@ const SignUpScreen = () => {
               control={control} 
               secureTextEntry={true}
               rules={{
+                validate: value =>
+                  value == pwd || 'Password does not match',
                 required: 'Password confirmation is required',
-                minLength: {
-                    value: 3, 
-                    message: 'Password should be minimum 3 characters',
-                }, //this object overwrites default error message when the validation paramter is not met
-                pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/,
-                  message: "Your password must contain at least one letter, one number, and one special character (@$!%*#?&)"
-                  //We should verify that the passwords match, but how?
                 }
-              }}
+              }
             />
 
             <CustomButton

@@ -12,7 +12,6 @@ import {useForm, Controller} from 'react-hook-form';
 
 
 const ForgotPasswordScreen = () => {
-    const [username, setUsername] = useState('');
 
     const navigation = useNavigation();
 
@@ -23,7 +22,8 @@ const ForgotPasswordScreen = () => {
   } = useForm();
 
 
-    const onSendPressed = () => {
+    const onSendPressed = (data) => {
+        console.warn(data)
         navigation.navigate("ResetPassword");
     }
     const onSignInPressed = () => {

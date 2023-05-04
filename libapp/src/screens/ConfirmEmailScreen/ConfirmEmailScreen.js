@@ -19,7 +19,6 @@ const COLORS = {
 }
 
 const ConfirmEmailScreen = () => {
-    const [code, setCode] = useState('');
 
     const navigation = useNavigation();
     const {
@@ -29,8 +28,9 @@ const ConfirmEmailScreen = () => {
   } = useForm();
 
 
-    const onConfirmPressed = () => {
+    const onConfirmPressed = (data) => {
       //validate code
+      console.warn(data);
       navigation.navigate("HomeScreen");
     }
     const onSignInPressed = () => {

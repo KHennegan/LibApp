@@ -14,6 +14,8 @@ import SocialSignInButtons from '../../components/SocialSignInButtons'
 import { useNavigation} from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 
+const USER_REGEX = /[a-zA-Z]\w+/;
+
 const COLORS = {
     GREEN: '#CCE8CC',
     BLUE: '#7899D4',
@@ -70,7 +72,7 @@ const SignInScreen = () => {
                     message: "Usernames cannot exceede 12 characters in length"
                 },
                 pattern: {
-                    value: /[a-zA-Z]\w+/,
+                    value: USER_REGEX,
                     message: 'Usernames must start with a letter and contain only digits and numbers'
                 }
             
@@ -84,8 +86,8 @@ const SignInScreen = () => {
               rules={{
                 required: 'Password is required',
                 minLength: {
-                    value: 3, 
-                    message: 'Password should be minimum 3 characters'
+                    value: 8, 
+                    message: 'Password should be minimum 8 characters'
                 }, //this object overwrites default error message when the validation paramter is not met
             }}
 
