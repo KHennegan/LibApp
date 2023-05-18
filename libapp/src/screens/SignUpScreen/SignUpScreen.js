@@ -10,6 +10,9 @@ import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons/SocialSignInButtons';
 import { useNavigation } from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
+import { auth } from '../../../firebase';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+
 
 const COLORS = {
   GREEN: '#CCE8CC',
@@ -22,6 +25,7 @@ const COLORS = {
 const EMAIL_REGEX = /\w+[@]\w+(\.[A-Za-z]{2,3})$/
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/
 
+
 const SignUpScreen = () => {
     const navigation = useNavigation();
     const {
@@ -33,7 +37,24 @@ const SignUpScreen = () => {
 
     const pwd = watch('password');
 
-    const onRegisterPressed = () => {
+    const onRegisterPressed = async (data) => {
+      const {username, password, email} = data;
+      try {
+        const userCredentials = await createUserWithEmailAndPassword(auth,email,password);
+        const user = await userCredentials.user
+        
+        await user.updateProfile({
+          displayName: username,
+        });
+
+        await sendEmailVerification(auth.currentUser);
+        console.log(user.email);
+      } catch (errors) {
+        console.error(errors);
+        //console.log('line 48: ' + errors.message);
+        //throw errors;
+      }
+      
         navigation.navigate("ConfirmEmail");
     }
     
